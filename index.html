@@ -2,10 +2,156 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Test Website</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #0d0d10;
+      color: #f5f0e6;
+      text-align: center;
+    }
+
+    header {
+      padding: 3rem 1rem 1.5rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin: 0;
+      letter-spacing: 0.03em;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 8px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 6px;
+      filter: brightness(0.85);
+    }
+
+    .question {
+      padding: 3rem 1rem 1rem;
+    }
+
+    .question h2 {
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      margin: 0 0 2rem;
+    }
+
+    .buttons {
+      position: relative;
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 1.1rem;
+      padding: 0.9rem 2.2rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    #yesBtn {
+      background: #d4af37;
+      color: #1a1a1a;
+      font-weight: bold;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.08);
+    }
+
+    #noBtn {
+      background: transparent;
+      color: #f5f0e6;
+      border: 1px solid rgba(245, 240, 230, 0.5);
+      position: relative;
+    }
+
+    footer {
+      padding: 3rem 1rem 1rem;
+      font-size: 0.85rem;
+      opacity: 0.6;
+    }
+
+    #reveal {
+      display: none;
+      padding: 1rem;
+      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+    }
+  </style>
 </head>
 <body>
-  <h1>Test Website</h1>
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=andrewturnb7-sketch.test-website" alt="views counter">
+  <header>
+    <h1>Test Website</h1>
+    <img src="https://visitor-badge.laobi.icu/badge?page_id=andrewturnb7-sketch.test-website" alt="views counter">
+  </header>
+
+  <div class="gallery">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/1280px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg" alt="Eiffel Tower">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Le_sacre_coeur.jpg/1280px-Le_sacre_coeur.jpg" alt="Sacré-Cœur">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Louvre_Museum_Wikimedia_Commons.jpg/1280px-Louvre_Museum_Wikimedia_Commons.jpg" alt="The Louvre">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Arc_de_Triomphe%2C_Paris_21_October_2010.jpg/1280px-Arc_de_Triomphe%2C_Paris_21_October_2010.jpg" alt="Arc de Triomphe">
+  </div>
+
+  <div class="question">
+    <h2>Are you ready for Paris?</h2>
+    <div class="buttons">
+      <button id="yesBtn" onclick="sayYes()">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+    <div id="reveal">Perfect. Paris, here we come. 🥐🗼</div>
+  </div>
+
+  <footer>Made with love for our trip.</footer>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const buttons = document.querySelector('.buttons');
+
+    function dodge() {
+      const area = buttons.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+      const maxX = area.width - btn.width;
+      const maxY = area.height - btn.height;
+      const x = Math.random() * maxX - maxX / 2;
+      const y = Math.random() * maxY - maxY / 2;
+      noBtn.style.position = 'relative';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
+
+    noBtn.addEventListener('mouseover', dodge);
+    noBtn.addEventListener('touchstart', function (e) {
+      e.preventDefault();
+      dodge();
+    });
+
+    function sayYes() {
+      document.getElementById('reveal').style.display = 'block';
+      document.querySelector('.buttons').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
