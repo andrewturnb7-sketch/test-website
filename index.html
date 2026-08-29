@@ -15,6 +15,66 @@
       background: #0d0d10;
       color: #f5f0e6;
       text-align: center;
+      overflow-x: hidden;
+    }
+
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bg-decor .ring-watermark {
+      position: absolute;
+      bottom: -12vw;
+      right: -10vw;
+      width: 55vw;
+      height: 55vw;
+      max-width: 700px;
+      max-height: 700px;
+      border-radius: 50%;
+      border: 2.5vw solid rgba(212, 175, 55, 0.08);
+    }
+
+    .bg-decor .rose {
+      position: absolute;
+      color: rgba(196, 90, 120, 0.16);
+    }
+
+    .bg-decor .rose.rose-1 { top: -4vw; left: -4vw; width: 22vw; max-width: 260px; }
+    .bg-decor .rose.rose-2 { bottom: 4vh; left: -6vw; width: 18vw; max-width: 220px; transform: rotate(-15deg); }
+    .bg-decor .rose.rose-3 { top: 30vh; right: -5vw; width: 16vw; max-width: 190px; transform: rotate(20deg); }
+
+    .rings-falling {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .rings-falling .ring-emoji {
+      position: absolute;
+      top: -10vh;
+      will-change: transform, opacity;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.3));
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+      8% { opacity: 0.9; }
+      92% { opacity: 0.9; }
+      100% { transform: translateY(120vh) translateX(var(--drift, 20px)) rotate(360deg); opacity: 0; }
+    }
+
+    .page-content {
+      position: relative;
+      z-index: 2;
     }
 
     header {
@@ -103,6 +163,15 @@
   </style>
 </head>
 <body>
+  <div class="bg-decor">
+    <div class="ring-watermark"></div>
+    <svg class="rose rose-1" viewBox="0 0 100 100" fill="currentColor"><g><ellipse cx="50" cy="35" rx="18" ry="26"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(60 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(120 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(180 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(240 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(300 50 50)"/><circle cx="50" cy="50" r="9"/></g></svg>
+    <svg class="rose rose-2" viewBox="0 0 100 100" fill="currentColor"><g><ellipse cx="50" cy="35" rx="18" ry="26"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(60 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(120 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(180 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(240 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(300 50 50)"/><circle cx="50" cy="50" r="9"/></g></svg>
+    <svg class="rose rose-3" viewBox="0 0 100 100" fill="currentColor"><g><ellipse cx="50" cy="35" rx="18" ry="26"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(60 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(120 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(180 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(240 50 50)"/><ellipse cx="50" cy="35" rx="18" ry="26" transform="rotate(300 50 50)"/><circle cx="50" cy="50" r="9"/></g></svg>
+  </div>
+  <div class="rings-falling" id="ringsFalling"></div>
+
+  <div class="page-content">
   <header>
     <h1>To Meu Amor Ester</h1>
   </header>
@@ -126,8 +195,30 @@
   </div>
 
   <footer>Made with love for our trip.</footer>
+  </div>
 
   <script>
+    (function spawnFallingRings() {
+      const container = document.getElementById('ringsFalling');
+      const count = 18;
+      for (let i = 0; i < count; i++) {
+        const ring = document.createElement('span');
+        ring.className = 'ring-emoji';
+        ring.textContent = '💍';
+        const left = Math.random() * 100;
+        const size = 1.1 + Math.random() * 1.4;
+        const duration = 9 + Math.random() * 8;
+        const delay = -(Math.random() * (duration + count));
+        const drift = (Math.random() * 80 - 40) + 'px';
+        ring.style.left = left + 'vw';
+        ring.style.fontSize = size + 'rem';
+        ring.style.animationDuration = duration + 's';
+        ring.style.animationDelay = delay + 's';
+        ring.style.setProperty('--drift', drift);
+        container.appendChild(ring);
+      }
+    })();
+
     const noBtn = document.getElementById('noBtn');
     const buttons = document.querySelector('.buttons');
 
