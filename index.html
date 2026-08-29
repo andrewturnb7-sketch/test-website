@@ -191,6 +191,17 @@
     </div>
     <div id="reveal">
       <video src="paris-video.mp4" controls autoplay playsinline style="max-width: 100%; width: 480px; border-radius: 8px;"></video>
+
+      <div id="confirmStep" style="margin-top: 2.5rem;">
+        <h2>Are you sure?</h2>
+        <div class="buttons" style="height: auto; margin-top: 1rem;">
+          <button id="yesBtn2" onclick="showPhoto()">Yes</button>
+        </div>
+      </div>
+
+      <div id="photoReveal" style="display: none; margin-top: 2rem;">
+        <img src="us-photo.jpg" alt="Us" style="max-width: 100%; width: 480px; border-radius: 8px;">
+      </div>
     </div>
   </div>
 
@@ -243,6 +254,11 @@
     function sayYes() {
       document.getElementById('reveal').style.display = 'block';
       document.querySelector('.buttons').style.display = 'none';
+    }
+
+    function showPhoto() {
+      document.getElementById('confirmStep').style.display = 'none';
+      document.getElementById('photoReveal').style.display = 'block';
     }
   </script>
 </body>
